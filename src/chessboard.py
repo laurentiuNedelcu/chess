@@ -1,3 +1,5 @@
+import os
+
 import piece
 
 TILE_SIZE = 50
@@ -11,12 +13,23 @@ class ChessBoard:
         self.draw_screen = turtle.Screen()
         self.whitePieces = []
         self.blackPieces = []
-        self.pieces_img = {'bishop_black': 'resources/bishop_black.gif', 'bishop_white': 'resources/bishop_white.gif',
-                           'king_black': 'resources/king_black.gif', 'king_white': 'resources/king_white.gif',
-                           'knight_black': 'resources/knight_black.gif', 'knight_white': 'resources/knight_white.gif',
-                           'pawn_black': 'resources/pawn_black.gif', 'pawn_white': 'resources/pawn_white.gif',
-                           'queen_black': 'resources/queen_black.gif', 'queen_white': 'resources/queen_white.gif',
-                           'rook_black': 'resources/rook_black.gif', 'rook_white': 'resources/rook_white.gif'}
+
+        current_path = os.path.dirname(__file__)  # Where your .py file is located
+        current_path = current_path.replace('src', 'resources')
+
+        self.pieces_img = {'bishop_black': os.path.join(current_path, 'bishop_black.gif'),
+                           'bishop_white': os.path.join(current_path, 'bishop_white.gif'),
+                           'king_black': os.path.join(current_path, 'king_black.gif'),
+                           'king_white': os.path.join(current_path, 'king_white.gif'),
+                           'knight_black': os.path.join(current_path, 'knight_black.gif'),
+                           'knight_white': os.path.join(current_path, 'knight_white.gif'),
+                           'pawn_black': os.path.join(current_path, 'pawn_black.gif'),
+                           'pawn_white': os.path.join(current_path, 'pawn_white.gif'),
+                           'queen_black': os.path.join(current_path, 'queen_black.gif'),
+                           'queen_white': os.path.join(current_path, 'queen_white.gif'),
+                           'rook_black': os.path.join(current_path, 'rook_black.gif'),
+                           'rook_white': os.path.join(current_path, 'rook_white.gif')}
+
         self.setup_pieces()
 
         self.colour = 0  # 0 white, 1 black
@@ -24,10 +37,38 @@ class ChessBoard:
         self.pos_x = margin - self.draw_screen.window_width() / 2
         self.pos_y = self.draw_screen.window_height() / 2 - margin
 
-    def setup_pieces(self):
+    def setup_pieces_img(self, turtle):
+        for key in self.pieces_img.keys():
+            print(self.pieces_img.get(key))
+            self.draw_screen.register_shape(self.pieces_img.get(key))
 
-        for i in self.pieces_img:
-            self.draw_screen.register_shape(i)
+        # Black pieces
+        pieces_in_board = []
+        pieces = [
+            [-230, 180, self.pieces_img['rook_black']],
+            [-180, 180, self.pieces_img['knight_black']],
+            [-130, 180, self.pieces_img['bishop_black']],
+            [-80, 180, self.pieces_img['queen_black']],
+            [-30, 180, self.pieces_img['king_black']],
+            [20, 180, self.pieces_img['bishop_black']],
+            [70, 180, self.pieces_img['knight_black']],
+            [120, 180, self.pieces_img['rook_black']]
+        ]
+
+        for p in pieces:
+            piece_in_board = turtle.Turtle()
+            piece_in_board.up()
+            piece_in_board.goto(p[0], p[1])
+            piece_in_board.shape(p[2])
+
+            piece_in_board.width = 10
+            piece_in_board.height = 10
+
+            pieces_in_board.append(piece_in_board)
+
+        return pieces_in_board
+
+    def setup_pieces(self):
 
         # White pieces
         self.whitePieces.append(piece.Piece(0, 0, 'white', TILE_SIZE, 'R'))
@@ -68,7 +109,7 @@ class ChessBoard:
                     self.chessboard.fillcolor('white')
                     self.colour = 1
                 else:
-                    self.chessboard.fillcolor('black')
+                    self.chessboard.fillcolor('brown')
                     self.colour = 0
                 self.chessboard.begin_fill()
                 for k in range(4):

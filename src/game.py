@@ -42,4 +42,5 @@ if __name__ == '__main__':
             draw_chessboard = False
             chessboard = chessboard.ChessBoard(turtle)
             chessboard.draw_chess_board()
+            chessboard.setup_pieces_img(turtle)
 
