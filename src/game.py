@@ -1,7 +1,6 @@
 import chessboard
 import menu
 import turtle
-import piece
 
 pos_x = None
 pos_y = None
@@ -18,8 +17,6 @@ if __name__ == '__main__':
     draw_chessboard = False
     draw_menu = True
     exit_game = False
-
-    piece = piece.Piece(0, 0, 'white', 50, 'R')
 
     while not exit_game:
         if draw_menu:
@@ -42,5 +39,5 @@ if __name__ == '__main__':
             draw_chessboard = False
             chessboard = chessboard.ChessBoard(turtle)
             chessboard.draw_chess_board()
-            chessboard.setup_pieces_img(turtle)
+            chessboard.update_img(turtle)
 

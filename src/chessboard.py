@@ -37,75 +37,68 @@ class ChessBoard:
         self.pos_x = margin - self.draw_screen.window_width() / 2
         self.pos_y = self.draw_screen.window_height() / 2 - margin
 
-    def setup_pieces_img(self, turtle):
-        for key in self.pieces_img.keys():
-            print(self.pieces_img.get(key))
-            self.draw_screen.register_shape(self.pieces_img.get(key))
+    def update_img(self, turtle):
 
-        # Black pieces
-        pieces_in_board = []
-        pieces = [
-            [-230, 180, self.pieces_img['rook_black']],
-            [-180, 180, self.pieces_img['knight_black']],
-            [-130, 180, self.pieces_img['bishop_black']],
-            [-80, 180, self.pieces_img['queen_black']],
-            [-30, 180, self.pieces_img['king_black']],
-            [20, 180, self.pieces_img['bishop_black']],
-            [70, 180, self.pieces_img['knight_black']],
-            [120, 180, self.pieces_img['rook_black']],
-            [-230, -170, self.pieces_img['rook_white']],
-            [-180, -170, self.pieces_img['knight_white']],
-            [-130, -170, self.pieces_img['bishop_white']],
-            [-80, -170, self.pieces_img['queen_white']],
-            [-30, -170, self.pieces_img['king_white']],
-            [20, -170, self.pieces_img['bishop_white']],
-            [70, -170, self.pieces_img['knight_white']],
-            [120, -170, self.pieces_img['rook_white']]
-        ]
-
-        for i in range(8):
-            pieces.append([-230+50*i, 130, self.pieces_img['pawn_black']])
-            pieces.append([-230+50*i, -120, self.pieces_img['pawn_white']])
-
-        for p in pieces:
+        # White pieces
+        for p in self.whitePieces:
             piece_in_board = turtle.Turtle()
             piece_in_board.up()
-            piece_in_board.goto(p[0], p[1])
-            piece_in_board.shape(p[2])
+            piece_in_board.goto(p.get_pos_img(0), p.get_pos_img(1))
+            piece_in_board.shape(p.get_img())
 
-            piece_in_board.width = 10
-            piece_in_board.height = 10
-
-            pieces_in_board.append(piece_in_board)
-
-        return pieces_in_board
+        # Black pieces
+        for p in self.blackPieces:
+            piece_in_board = turtle.Turtle()
+            piece_in_board.up()
+            piece_in_board.goto(p.get_pos_img(0), p.get_pos_img(1))
+            piece_in_board.shape(p.get_img())
 
     def setup_pieces(self):
 
         # White pieces
-        self.whitePieces.append(piece.Piece(0, 0, 'white', TILE_SIZE, 'R'))
-        self.whitePieces.append(piece.Piece(0, 1, 'white', TILE_SIZE, 'Kn'))
-        self.whitePieces.append(piece.Piece(0, 2, 'white', TILE_SIZE, 'B'))
-        self.whitePieces.append(piece.Piece(0, 3, 'white', TILE_SIZE, 'Q'))
-        self.whitePieces.append(piece.Piece(0, 4, 'white', TILE_SIZE, 'K'))
-        self.whitePieces.append(piece.Piece(0, 5, 'white', TILE_SIZE, 'B'))
-        self.whitePieces.append(piece.Piece(0, 6, 'white', TILE_SIZE, 'Kn'))
-        self.whitePieces.append(piece.Piece(0, 7, 'white', TILE_SIZE, 'R'))
+        self.whitePieces.append(
+            piece.Piece(0, 0, -230, -170, 'white', TILE_SIZE, 'R', self.pieces_img.get('rook_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 1, -180, -170, 'white', TILE_SIZE, 'Kn', self.pieces_img.get('knight_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 2, -130, -170, 'white', TILE_SIZE, 'B', self.pieces_img.get('bishop_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 3, -80, -170, 'white', TILE_SIZE, 'Q', self.pieces_img.get('queen_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 4, -30, -170, 'white', TILE_SIZE, 'K', self.pieces_img.get('king_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 5, 20, -170, 'white', TILE_SIZE, 'B', self.pieces_img.get('bishop_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 6, 70, -170, 'white', TILE_SIZE, 'Kn', self.pieces_img.get('knight_white')))
+        self.whitePieces.append(
+            piece.Piece(0, 7, 120, -170, 'white', TILE_SIZE, 'R', self.pieces_img.get('rook_white')))
 
         # Black pieces
-        self.blackPieces.append(piece.Piece(7, 0, 'black', TILE_SIZE, 'R'))
-        self.blackPieces.append(piece.Piece(7, 1, 'black', TILE_SIZE, 'Kn'))
-        self.blackPieces.append(piece.Piece(7, 2, 'black', TILE_SIZE, 'B'))
-        self.blackPieces.append(piece.Piece(7, 3, 'black', TILE_SIZE, 'Q'))
-        self.blackPieces.append(piece.Piece(7, 4, 'black', TILE_SIZE, 'K'))
-        self.blackPieces.append(piece.Piece(7, 5, 'black', TILE_SIZE, 'B'))
-        self.blackPieces.append(piece.Piece(7, 6, 'black', TILE_SIZE, 'Kn'))
-        self.blackPieces.append(piece.Piece(7, 7, 'black', TILE_SIZE, 'R'))
+        self.blackPieces.append(
+            piece.Piece(7, 0, -230, 180, 'black', TILE_SIZE, 'R', self.pieces_img.get('rook_black')))
+        self.blackPieces.append(
+            piece.Piece(7, 1, -180, 180, 'black', TILE_SIZE, 'Kn', self.pieces_img.get('knight_black')))
+        self.blackPieces.append(
+            piece.Piece(7, 2, -130, 180, 'black', TILE_SIZE, 'B', self.pieces_img.get('bishop_black')))
+        self.blackPieces.append(
+            piece.Piece(7, 3, -80, 180, 'black', TILE_SIZE, 'Q', self.pieces_img.get('queen_black')))
+        self.blackPieces.append(piece.Piece(7, 4, -30, 180, 'black', TILE_SIZE, 'K', self.pieces_img.get('king_black')))
+        self.blackPieces.append(
+            piece.Piece(7, 5, 20, 180, 'black', TILE_SIZE, 'B', self.pieces_img.get('bishop_black')))
+        self.blackPieces.append(
+            piece.Piece(7, 6, 70, 180, 'black', TILE_SIZE, 'Kn', self.pieces_img.get('knight_black')))
+        self.blackPieces.append(piece.Piece(7, 7, 120, 180, 'black', TILE_SIZE, 'R', self.pieces_img.get('rook_black')))
 
         # Pawns for white and black pieces
         for i in range(8):
-            self.whitePieces.append(piece.Piece(1, i, 'white', TILE_SIZE, 'P'))
-            self.blackPieces.append(piece.Piece(6, i, 'black', TILE_SIZE, 'P'))
+            self.whitePieces.append(
+                piece.Piece(1, i, -230 + 50 * i, -120, 'white', TILE_SIZE, 'P', self.pieces_img.get('pawn_white')))
+            self.blackPieces.append(
+                piece.Piece(6, i, -230 + 50 * i, 130, 'black', TILE_SIZE, 'P', self.pieces_img.get('pawn_black')))
+
+        # Register shape of pieces images
+        for key in self.pieces_img.keys():
+            self.draw_screen.register_shape(self.pieces_img.get(key))
 
     def draw_chess_board(self):
 
