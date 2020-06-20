@@ -52,8 +52,20 @@ class ChessBoard:
             [-30, 180, self.pieces_img['king_black']],
             [20, 180, self.pieces_img['bishop_black']],
             [70, 180, self.pieces_img['knight_black']],
-            [120, 180, self.pieces_img['rook_black']]
+            [120, 180, self.pieces_img['rook_black']],
+            [-230, -170, self.pieces_img['rook_white']],
+            [-180, -170, self.pieces_img['knight_white']],
+            [-130, -170, self.pieces_img['bishop_white']],
+            [-80, -170, self.pieces_img['queen_white']],
+            [-30, -170, self.pieces_img['king_white']],
+            [20, -170, self.pieces_img['bishop_white']],
+            [70, -170, self.pieces_img['knight_white']],
+            [120, -170, self.pieces_img['rook_white']]
         ]
+
+        for i in range(8):
+            pieces.append([-230+50*i, 130, self.pieces_img['pawn_black']])
+            pieces.append([-230+50*i, -120, self.pieces_img['pawn_white']])
 
         for p in pieces:
             piece_in_board = turtle.Turtle()
@@ -91,7 +103,7 @@ class ChessBoard:
         self.blackPieces.append(piece.Piece(7, 7, 'black', TILE_SIZE, 'R'))
 
         # Pawns for white and black pieces
-        for i in range(7):
+        for i in range(8):
             self.whitePieces.append(piece.Piece(1, i, 'white', TILE_SIZE, 'P'))
             self.blackPieces.append(piece.Piece(6, i, 'black', TILE_SIZE, 'P'))
 

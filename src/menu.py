@@ -7,6 +7,8 @@ class DrawMenu:
 
     def __init__(self, turtle):
 
+        turtle.hideturtle()
+
         style_title = ('Courier', 60, 'bold')
         self.move_y(turtle, 150)
         turtle.write('Chess', font=style_title, align='center')
