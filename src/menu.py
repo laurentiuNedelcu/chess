@@ -27,8 +27,10 @@ class DrawMenu:
         turtle.down()
         return
 
+    """
+    This method returns the option selected, the buttons are not responsive therefore px has been manually calculated
+    """
     def option_selected(self, x, y):
-        print("(", x, ",", y, ")")
         if x is not None and y is not None:
             if 98.0 > x > -99.0 and 12.0 > y > -10.0:
                 return 1

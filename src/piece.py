@@ -12,7 +12,7 @@ class Piece:
         self.tile_size = tile_size
         self.letter = letter
 
-        self.posImg = (pos_x, pos_y)
+        self.posImg = [pos_x, pos_y]
         self.position = (x, y)
 
     def get_pos_img(self, index):
@@ -20,6 +20,10 @@ class Piece:
 
     def get_img(self):
         return self.img
+
+    def update_position_img(self, x, y):
+        self.posImg[0] = x
+        self.posImg[1] = y
 
     def in_boards(self):
         if 8 > self.position[0] >= 0 and 8 > self.position[1] >= 0:
@@ -40,5 +44,3 @@ class Piece:
             if opponent_piece.colour == self.colour:
                 return True
         return False
-
-

@@ -4,9 +4,13 @@ import turtle
 
 pos_x = None
 pos_y = None
+chess_board = None
+valid_move = False
+i = 0
 
 
 def update_pos_xy(x, y):
+    print('(' + str(x) + ', ' + str(y) + ')')
     global pos_x, pos_y
     pos_x = x
     pos_y = y
@@ -35,9 +39,14 @@ if __name__ == '__main__':
             elif opt == 3:
                 exit_game = True
 
-        elif draw_chessboard:
-            draw_chessboard = False
-            chessboard = chessboard.ChessBoard(turtle)
-            chessboard.draw_chess_board()
-            chessboard.update_img(turtle)
+        else:
+            if draw_chessboard:
+                draw_chessboard = False
+                chess_board = chessboard.ChessBoard(turtle)
+                chess_board.draw_chess_board()
+                chess_board.update_img(turtle)
 
+            else:
+                print('PIECE')
+                move_piece = chess_board.on_click_piece()
+                turtle.onscreenclick(chess_board.update_piece_img)

@@ -13,6 +13,9 @@ class ChessBoard:
         self.draw_screen = turtle.Screen()
         self.whitePieces = []
         self.blackPieces = []
+        self.pieces_in_board = []
+        self.piece_index = -1
+        self._exit = False
 
         current_path = os.path.dirname(__file__)  # Where your .py file is located
         current_path = current_path.replace('src', 'resources')
@@ -37,6 +40,15 @@ class ChessBoard:
         self.pos_x = margin - self.draw_screen.window_width() / 2
         self.pos_y = self.draw_screen.window_height() / 2 - margin
 
+    def update_piece_img(self, x, y):
+        print('UPDATING')
+        p = self.whitePieces[self.piece_index]
+        p.update_position_img(x, y)
+        piece_in_board = self.pieces_in_board[self.piece_index]
+        piece_in_board.up()
+        piece_in_board.goto(p.get_pos_img(0), p.get_pos_img(1))
+        piece_in_board.shape(p.get_img())
+
     def update_img(self, turtle):
 
         # White pieces
@@ -45,6 +57,7 @@ class ChessBoard:
             piece_in_board.up()
             piece_in_board.goto(p.get_pos_img(0), p.get_pos_img(1))
             piece_in_board.shape(p.get_img())
+            self.pieces_in_board.append(piece_in_board)
 
         # Black pieces
         for p in self.blackPieces:
@@ -52,6 +65,8 @@ class ChessBoard:
             piece_in_board.up()
             piece_in_board.goto(p.get_pos_img(0), p.get_pos_img(1))
             piece_in_board.shape(p.get_img())
+
+        self.chessboard.hideturtle()
 
     def setup_pieces(self):
 
@@ -100,9 +115,30 @@ class ChessBoard:
         for key in self.pieces_img.keys():
             self.draw_screen.register_shape(self.pieces_img.get(key))
 
+    def on_click_piece(self):
+        self._exit = False
+        self.draw_screen.listen()
+        i = 0
+
+        while not self._exit:
+            p = self.pieces_in_board[i]
+            p.onclick(self.piece_selected)
+            if not self._exit:
+                i += 1
+                if i == len(self.pieces_in_board):
+                    i = 0
+
+        self.piece_index = i
+
+        return True
+
+    def piece_selected(self, x, y):
+        print('x: ' + str(x) + ', y: ' + str(y))
+        self._exit = True
+
     def draw_chess_board(self):
 
-        self.chessboard.speed(1000)
+        self.chessboard.speed(0)
         self.chessboard.hideturtle()
 
         for i in range(8):
